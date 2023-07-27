@@ -1,7 +1,8 @@
 import smtplib
-
 import requests
+import time
 from datetime import datetime
+
 
 MY_LAT = 12.385330
 MY_LONG = 124.330513
@@ -43,14 +44,16 @@ def is_night():
     return True
 
 
-# Check if the conditions are true
-if is_iss_overhead() and is_night():
-    # Send an email
-    with smtplib.SMTP("smtp.gmail.com") as connection:
-        connection.starttls()
-        connection.login(user=MY_EMAIL, password=MY_PASSWORD)
-        connection.sendmail(
-            from_addr=MY_EMAIL,
-            to_addrs='johnivanpuayap@gmail.com',
-            msg="Subject: Look Up\n\nThe ISS is above you in the sky."
-        )
+while True:
+    time.sleep(60)
+    # Check if the conditions are true
+    if is_iss_overhead() and is_night():
+        # Send an email
+        with smtplib.SMTP("smtp.gmail.com") as connection:
+            connection.starttls()
+            connection.login(user=MY_EMAIL, password=MY_PASSWORD)
+            connection.sendmail(
+                from_addr=MY_EMAIL,
+                to_addrs='johnivanpuayap@gmail.com',
+                msg="Subject: Look Up\n\nThe ISS is above you in the sky."
+            )
